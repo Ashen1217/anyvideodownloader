@@ -45,7 +45,8 @@ def download_video():
             'outtmpl': 'downloads/%(title)s.%(ext)s',
             'quiet': True,
             'no_warnings': True,
-            'cookiefile': 'cookies.txt'  # Added cookie file
+            # Remove cookiefile for render.com deployment
+            # 'cookiefile': 'cookies.txt'
         }
 
         # Get video info first
@@ -99,7 +100,8 @@ def video_info():
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
-            'cookiefile': 'cookies.txt'  # Added cookie file
+            # Remove cookiefile for render.com deployment
+            # 'cookiefile': 'cookies.txt'
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -122,4 +124,6 @@ def video_info():
         }), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True)
+    # Use environment variable for port (Render.com requirement)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
