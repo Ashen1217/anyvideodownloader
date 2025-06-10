@@ -45,8 +45,7 @@ def download_video():
             'outtmpl': 'downloads/%(title)s.%(ext)s',
             'quiet': True,
             'no_warnings': True,
-            # Remove cookiefile for render.com deployment
-            # 'cookiefile': 'cookies.txt'
+            # 'cookiefile': 'cookies.txt' # Commented out for Render.com deployment
         }
 
         # Get video info first
@@ -58,8 +57,8 @@ def download_video():
                 
                 # Download the video
                 ydl_opts['outtmpl'] = full_path
-                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([url])
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl_download:
+                    ydl_download.download([url])
                 
                 return jsonify({
                     'success': True,
@@ -100,8 +99,7 @@ def video_info():
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
-            # Remove cookiefile for render.com deployment
-            # 'cookiefile': 'cookies.txt'
+            # 'cookiefile': 'cookies.txt' # Commented out for Render.com deployment
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -124,6 +122,7 @@ def video_info():
         }), 500
 
 if __name__ == '__main__':
-    # Use environment variable for port (Render.com requirement)
+    # Use environment variable for port, which is required by Render.com
     port = int(os.environ.get('PORT', 5000))
+    # Set debug=False for production and bind to 0.0.0.0
     app.run(host='0.0.0.0', port=port, debug=False)
