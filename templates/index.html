@@ -303,6 +303,9 @@
     </div>
 
     <script>
+        // Get the base URL dynamically
+        const BASE_URL = window.location.origin;
+
         // Add smooth entrance animation on load
         window.addEventListener('load', () => {
             document.body.style.opacity = '0';
@@ -357,7 +360,7 @@
             }, 400);
 
             try {
-                const response = await fetch('http://68.183.112.35:5002/api/download', {
+                const response = await fetch(`${BASE_URL}/api/download`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -374,7 +377,7 @@
                 if (response.ok) {
                     showSuccess('✨ Video downloaded successfully!');
                     // Show download link with animation
-                    downloadLink.innerHTML = `<a href="http://68.183.112.35:5002/api/video/${data.filename}" download class="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-300/50 animate-scale-bounce"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Download Complete - Click Here</a>`;
+                    downloadLink.innerHTML = `<a href="${BASE_URL}/api/video/${data.filename}" download class="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-300/50 animate-scale-bounce"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Download Complete - Click Here</a>`;
                     downloadLink.style.display = 'block';
                 } else {
                     showError(data.error || '❌ Failed to download video');
@@ -438,7 +441,7 @@
             videoDetails.classList.add('hidden');
 
             try {
-                const response = await fetch('http://68.183.112.35:5002/api/video-info', {
+                const response = await fetch(`${BASE_URL}/api/video-info`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
